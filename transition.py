@@ -12,6 +12,8 @@ Mennesker = {
     'meweb':   'Mette Weber',
     'taphs':   'Tanya Pheiffer Sunding',
     'thokn':   'Thomas Knudsen',
+    'pn':      'Palle Nielsen',
+    'rmort':   'Rene Thyregod Andsbjerg',
     'extern':  'Udenfor GRF',           # Elvis, Helle, Steen, PW, morbo, ...
 }
 
@@ -38,9 +40,10 @@ Opgaver = {
 
 # dict-of-strings
 Tovholdere = {
-    'plugin':     'thokn',
-    'ilægning':   'kreve',
+    'plugin':      'thokn',
+    'ilægning':    'kreve',
     'videnstrans': 'kreve',
+    'kursus':      'majws',
 }
 
 # dict-of-sets
@@ -80,7 +83,9 @@ Personafhængigheder = {
     'materiale':   {'majws', 'kjbri', 'thokn'},
     'kursus':      {'materiale'},
     'videnstrans': {'kreve', 'lrh', 'extern'},
-    'tilpasning':  {'taphs', 'kreve', 'majws', 'thokn'}
+    'tilpasning':  {'taphs', 'kreve', 'majws', 'thokn'},
+    'kons':        {'kreve'},
+    'kursus':      {'thokn', 'kreve', 'majws', 'asmei', 'kjbri', 'nho', 'pn', 'rmort', 'lrh'}
 }
 
 
