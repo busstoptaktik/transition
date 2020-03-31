@@ -38,12 +38,11 @@ Opgaver = {
     'valdetest':   'Opsæt Valde-testmiljø der udstiller Helles mellemtabeller',
     'kontrol':     'Stikprøvekontrol af Databasemigrering',
 
-    'kons':        'Konsolidering af kodebasen',
     'ka_forb':     'Forberedelse af kode- og arkitekturintroworkshop',
     'ka_intro':    'Kode- og arkitekturintroworkshop',
     'test_mark':   'Afprøvning og tilretning af alm beregningsfunktionalitet, FIRE-mark',
     'materiale':   'Udarbejdelse af kursusmateriale',
-    'kursus':      'Afholdelse af kursus i beregning og databaseanvendelse',
+    'kursus':      'Afholdelse/deltagelse i kursus om beregning, QGIS og databaseanvendelse',
     'tilpasning':  'Tilpasning af eksisterende kode, udvikling af ny funktionalitet',
     'udstilling':  'Inkrementel opdatering af udstillingsdata i GDBank',
     'videnstrans': 'Vidensoverdragelse omkring systemhåndtering',
@@ -51,14 +50,32 @@ Opgaver = {
 
 Afsluttede = {
     'valdetest',
+    'kons',
 }
 
 # dict-of-strings
 Tovholdere = {
     'plugin':      'thokn',
+    'kons':        'kreve',
+    'målerCD':     'nho',
+
     'ilægning':    'kreve',
-    'videnstrans': 'kreve',
+    'ilæg_niv':    'thokn',
+    'ilæg_5D':     'asmei',
+    'ilæg_GNSS':   'lrh',
+
+    'valdetest':   'kreve',
+    'kontrol':     'krkel',
+
+    'ka_forb':     'thokn',
+    'ka_intro':    'thokn',
+    'test_mark':   'majws',
+    'materiale':   'majws',
     'kursus':      'majws',
+    'tilpasning':  'kreve',
+
+    'udstilling':  'thokn',
+    'videnstrans': 'kreve',
 }
 
 # dict-of-sets
@@ -98,7 +115,7 @@ Personafhængigheder = {
     'ilæg_GNSS':   {'meweb'},
 
     'valdetest':   {'kreve', 'elfle'},
-    'kontrol':     {'krkel', 'nho', 'lrh'},
+    'kontrol':     {'krkel', 'nho', 'lrh', 'pn', 'rmort', 'kjbri'},
 
     'kons':        {'kreve'},
     'ka_forb':     {'kreve', 'thokn'},
@@ -135,7 +152,7 @@ class målerCD:
 #------------------------------------------------------------------------------
     """Hvilke dele af (det der engang hed) MålerCDen, skal FIREgenskabes?
 
-    Bl.a. laver Henrik en SQLite-fil med "lokaloversigt. Hvad er der ellers?
+    Bl.a. laver Henrik en SQLite-fil med "lokaloversigt". Hvad er der ellers?
     """
 
 #------------------------------------------------------------------------------
@@ -204,7 +221,7 @@ def banner(text=""):
     else:
         print ()
 
-if 'opgaver' in sys.argv[1:] or len(sys.argv)<2:
+if 'opgaver' in sys.argv[1:] or len(sys.argv) < 2:
     banner('Opgaver')
     for o in Opgaver:
         if o not in Afsluttede:
@@ -216,8 +233,8 @@ if 'opgaver' in sys.argv[1:] or len(sys.argv)<2:
             print(f"{o:12}  {Opgaver[o]}")
     banner()
 
-if 'mennesker' in sys.argv[1:] or len(sys.argv)<2:
-    banner('Opgaveallokering pr. humanoide')
+if 'mennesker' in sys.argv[1:] or len(sys.argv) < 2:
+    banner('Opgaveallokering pr. deltager')
     for m in Mennesker:
         # print(f"{m:5}  {Mennesker[m]}")
         tasks = set()
@@ -225,7 +242,13 @@ if 'mennesker' in sys.argv[1:] or len(sys.argv)<2:
             if m in Personafhængigheder[pa] and pa not in Afsluttede:
                 tasks |= {pa}
         if (len(tasks) > 0):
-            print(f"{m:12} {tasks}")
+            print(f"{m:12} Deltager:  {sorted(tasks)}")
+        tasks = set()
+        for th in Tovholdere:
+            if m in Tovholdere[th] and th not in Afsluttede:
+                tasks |= {th}
+        if (len(tasks) > 0):
+            print(f"             Tovholder: {sorted(tasks)}")
     banner()
 
 for arg in sys.argv[1:]:
